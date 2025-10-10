@@ -4,7 +4,7 @@ const isAdmin = require('../lib/isAdmin');
 async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSenderAdmin) {
     try {
         if (!isSenderAdmin) {
-            await sock.sendMessage(chatId, { text: '```For Group Admins Only!```' });
+            await sock.sendMessage(chatId, { text: '```¡Sólo para administradores de grupo!```' });
             return;
         }
 
@@ -31,7 +31,7 @@ async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSend
 
         const validActions = ['kick', 'delete', 'warn'];
         if (!validActions.includes(action)) {
-            await sock.sendMessage(chatId, { text: `*_Invalid action. Please use kick, delete, or warn._*` });
+            await sock.sendMessage(chatId, { text: `*_Acción no válida. Utilice expulsar, eliminar o advertir._*` });
             return;
         }
 
@@ -39,22 +39,22 @@ async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSend
             const result = await setAntilink(chatId, 'on', action);
             if (result) {
                 await sock.sendMessage(chatId, {
-                    text: `*_Antilink has been turned ON with action set to ${action}_*`
+                    text: `*_Antilink se ha activado con la acción establecida en ${action}_*`
                 });
             } else {
                 await sock.sendMessage(chatId, {
-                    text: '*_Failed to turn on Antilink_*'
+                    text: '*_No se pudo activar Antilink_*'
                 });
             }
         } else if (status === 'off') {
             await removeAntilink(chatId, 'on');
-            await sock.sendMessage(chatId, { text: '*_Antilink has been turned OFF_*' });
+            await sock.sendMessage(chatId, { text: '*_Antilink ha sido desactivado*' });
         } else {
             await sock.sendMessage(chatId, { text: usage });
         }
     } catch (error) {
         console.error('Error in antilink command:', error);
-        await sock.sendMessage(chatId, { text: '*_Error processing antilink command_*' });
+        await sock.sendMessage(chatId, { text: '*_Error al procesar el comando antilink_*' });
     }
 }
 
@@ -79,18 +79,18 @@ async function handleLinkDetection(sock, chatId, message, userMessage, senderId)
     }
 
     if (isLinkDetected) {
-        console.log(`Detected a link! Action: ${action}`);
+        console.log(`¡Se detectó un enlace! Acción: ${action}`);
 
         const mentionedJidList = [senderId];
         await sock.sendMessage(chatId, {
-            text: `⚠️ Warning! @${senderId.split('@')[0]}, posting links is not allowed.`,
+            text: `⚠️ Warning! @${senderId.split('@')[0]}, No se permite publicar enlaces.`,
             mentions: mentionedJidList
         });
 
         // The bot needs to be an admin to perform any action.
         const { isBotAdmin } = await isAdmin(sock, chatId, sock.user.id);
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: 'I need to be an admin to enforce antilink rules.' });
+            await sock.sendMessage(chatId, { text: 'Necesito ser administrador para aplicar las reglas antienlace.' });
             return true;
         }
 
@@ -105,7 +105,7 @@ async function handleLinkDetection(sock, chatId, message, userMessage, senderId)
                             participant: senderId
                         }
                     });
-                    console.log(`Message with ID ${message.key.id} deleted successfully.`);
+                    console.log(`Message with ID ${message.key.id} Eliminado exitosamente.`);
                 } catch (error) {
                     console.error('Failed to delete message:', error);
                 }
@@ -113,15 +113,15 @@ async function handleLinkDetection(sock, chatId, message, userMessage, senderId)
             case 'kick':
                 try {
                     await sock.groupParticipantsUpdate(chatId, [senderId], 'remove');
-                    await sock.sendMessage(chatId, { text: `User @${senderId.split('@')[0]} has been kicked for posting a link.`, mentions: mentionedJidList });
+                    await sock.sendMessage(chatId, { text: `User @${senderId.split('@')[0]} Fue expulsado por publicar un enlace.`, mentions: mentionedJidList });
                     console.log(`User ${senderId} kicked successfully.`);
                 } catch (error) {
                     console.error('Failed to kick user:', error);
-                    await sock.sendMessage(chatId, { text: `Failed to kick @${senderId.split('@')[0]}. I might not have the necessary permissions.`, mentions: mentionedJidList });
+                    await sock.sendMessage(chatId, { text: `Failed to kick @${senderId.split('@')[0]}. Es posible que no tenga los permisos necesarios.`, mentions: mentionedJidList });
                 }
                 break;
             case 'warn':
-                await sock.sendMessage(chatId, { text: `@${senderId.split('@')[0]} has been warned for posting a link.`, mentions: mentionedJidList });
+                await sock.sendMessage(chatId, { text: `@${senderId.split('@')[0]} Ha sido advertido por publicar un enlace.`, mentions: mentionedJidList });
                 console.log(`User ${senderId} warned.`);
                 break;
         }
