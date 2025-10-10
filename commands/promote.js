@@ -16,7 +16,7 @@ async function promoteCommand(sock, chatId, mentionedJids, message) {
     // If no user found through either method
     if (userToPromote.length === 0) {
         await sock.sendMessage(chatId, { 
-            text: 'Please mention the user or reply to their message to promote!'
+            text: 'Por favor menciona al usuario o responde a su mensaje para promocionarlo.!'
         });
         return;
     }
@@ -44,7 +44,7 @@ async function promoteCommand(sock, chatId, mentionedJids, message) {
         });
     } catch (error) {
         console.error('Error in promote command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to promote user(s)!'});
+        await sock.sendMessage(chatId, { text: 'No se pudo promover el usuario(s)!'});
     }
 }
 
@@ -74,11 +74,11 @@ async function handlePromotionEvent(sock, groupId, participants, author) {
             promotedBy = 'System';
         }
 
-        const promotionMessage = `*『 GROUP PROMOTION 』*\n\n` +
-            `👥 *Promoted User${participants.length > 1 ? 's' : ''}:*\n` +
+        const promotionMessage = `*『 PROMOCIÓN DE GRUPO 』*\n\n` +
+            `👥 *Usuario promovido${participants.length > 1 ? 's' : ''}:*\n` +
             `${promotedUsernames.map(name => `• ${name}`).join('\n')}\n\n` +
-            `👑 *Promoted By:* ${promotedBy}\n\n` +
-            `📅 *Date:* ${new Date().toLocaleString()}`;
+            `👑 *Promovido por:* ${promotedBy}\n\n` +
+            `📅 *Fecha:* ${new Date().toLocaleString()}`;
         
         await sock.sendMessage(groupId, {
             text: promotionMessage,
