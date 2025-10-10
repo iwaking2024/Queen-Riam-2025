@@ -8,7 +8,7 @@ async function songCommand(sock, chatId, message) {
         
         if (!searchQuery) {
             await sock.sendMessage(chatId, { 
-                text: "❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`"
+                text: "❌ Por favor proporcione un nombre de canción!\nEjemplo: `.play Lilly Alan Walker`"
             }, { quoted: message });
 
             // React ❌ when no query
@@ -23,7 +23,7 @@ async function songCommand(sock, chatId, message) {
         const { videos } = await yts(searchQuery);
         if (!videos || videos.length === 0) {
             await sock.sendMessage(chatId, { 
-                text: "⚠️ No results found for your query!"
+                text: "⚠️ No se encontraron resultados para su consulta!"
             }, { quoted: message });
 
             // React ⚠️ when no results
@@ -38,7 +38,7 @@ async function songCommand(sock, chatId, message) {
         // Send video info before download
         await sock.sendMessage(chatId, {
             image: { url: video.thumbnail },
-            caption: `🎵 *${video.title}*\n\n𝘿𝙤𝙬𝙣𝙡𝙤𝙖𝙙𝙞𝙣𝙜... 🎶\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ǫᴜᴇᴇɴ ʀɪᴀᴍ`
+            caption: `🎵 *${video.title}*\n\n Descargando... 🎶\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ shimba`
         }, { quoted: message });
 
         // React ⏳ while downloading
@@ -51,7 +51,7 @@ async function songCommand(sock, chatId, message) {
 
         if (!data?.status) {
             await sock.sendMessage(chatId, {
-                text: "🚫 Failed to fetch from new endpoint. Try again later."
+                text: "🚫 No se pudo obtener la información del nuevo punto final. Inténtelo más tarde."
             }, { quoted: message });
 
             // React 🚫 if API fails
@@ -64,7 +64,7 @@ async function songCommand(sock, chatId, message) {
 
         if (!audioUrl) {
             await sock.sendMessage(chatId, {
-                text: "🚫 No audio URL in the response. Can't send audio."
+                text: "🚫 No hay URL de audio en la respuesta. No se puede enviar el audio."
             }, { quoted: message });
 
             // React ❌ if audio not found
@@ -85,7 +85,7 @@ async function songCommand(sock, chatId, message) {
     } catch (error) {
         console.error('Error in songCommand:', error);
         await sock.sendMessage(chatId, {
-            text: "❌ Download failed. Please try again later."
+            text: "❌ Descarga fallida. Inténtalo de nuevo más tarde."
         }, { quoted: message });
 
         // React ❌ on error
