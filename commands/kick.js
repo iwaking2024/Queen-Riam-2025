@@ -12,7 +12,7 @@ async function kickCommand(sock, chatId, senderId, mentionedJids, message) {
         }
 
         if (!isSenderAdmin) {
-            await sock.sendMessage(chatId, { text: 'Only group admins can use the kick command.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Sólo los administradores de grupo pueden usar el comando de expulsión.' }, { quoted: message });
             return;
         }
     }
@@ -42,7 +42,7 @@ async function kickCommand(sock, chatId, senderId, mentionedJids, message) {
     // Check if any of the users to kick is the bot itself
     if (usersToKick.includes(botId)) {
         await sock.sendMessage(chatId, { 
-            text: "I can't kick myself! 🤖"
+            text: "¡No puedo patearme a mí mismo! 🤖"
         }, { quoted: message });
         return;
     }
@@ -56,7 +56,7 @@ async function kickCommand(sock, chatId, senderId, mentionedJids, message) {
         }));
         
         await sock.sendMessage(chatId, { 
-            text: `${usernames.join(', ')} has been kicked successfully!`,
+            text: `${usernames.join(', ')} ¡Ha sido expulsado con éxito!`,
             mentions: usersToKick
         });
     } catch (error) {
