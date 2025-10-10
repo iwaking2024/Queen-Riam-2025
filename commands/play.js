@@ -16,7 +16,7 @@ async function playCommand(sock, chatId, message) {
         const { videos } = await yts(searchQuery);
         if (!videos || videos.length === 0) {
             return await sock.sendMessage(chatId, { 
-                text: "⚠️ No results found for your query!"
+                text: "⚠️ No se encontraron resultados para su consulta!"
             }, { quoted: message });
         }
 
@@ -27,7 +27,7 @@ async function playCommand(sock, chatId, message) {
         // Send video info before download
         await sock.sendMessage(chatId, {
             image: { url: video.thumbnail },
-            caption: `🎵 *${video.title}*\n⏱ Duration: ${video.timestamp}\n👁 Views: ${video.views.toLocaleString()}\n\n⏳ Downloading audio...`
+            caption: `🎵 *${video.title}*\n⏱ Duration: ${video.timestamp}\n👁 Views: ${video.views.toLocaleString()}\n\n⏳ Descargando audio...`
         }, { quoted: message });
 
         // Call the new API with ?url= style
@@ -38,7 +38,7 @@ async function playCommand(sock, chatId, message) {
         if (!data?.status) {
             // The API did not return a “status: true” or valid data
             return await sock.sendMessage(chatId, {
-                text: "🚫 Failed to fetch from new endpoint. Try again later."
+                text: "🚫 No se pudo obtener la información del nuevo punto final. Inténtelo de nuevo más tarde.."
             }, { quoted: message });
         }
 
@@ -48,7 +48,7 @@ async function playCommand(sock, chatId, message) {
 
         if (!audioUrl) {
             return await sock.sendMessage(chatId, {
-                text: "🚫 No audio URL in the response. Can't send audio."
+                text: "🚫 No hay URL de audio en la respuesta. No se puede enviar el audio."
             }, { quoted: message });
         }
 
@@ -62,7 +62,7 @@ async function playCommand(sock, chatId, message) {
     } catch (error) {
         console.error('Error in playCommand:', error);
         await sock.sendMessage(chatId, {
-            text: "❌ Download failed. Please try again later."
+            text: "❌ Descarga fallida. Inténtalo de nuevo más tarde."
         }, { quoted: message });
     }
 }
