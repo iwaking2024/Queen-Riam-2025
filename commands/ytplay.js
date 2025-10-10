@@ -4,7 +4,7 @@ const yts = require("yt-search");
 async function ytplayCommand(sock, chatId, query, message) {
     if (!query) {
         return await sock.sendMessage(chatId, {
-            text: "⚠️ Please provide a YouTube link or search query.\n\nExample:\n```.ytplay another love```"
+            text: "⚠️ Proporcione un enlace de YouTube o una consulta de búsqueda..\n\nEjemplo:\n```.ytplay another love```"
         });
     }
 
@@ -17,7 +17,7 @@ async function ytplayCommand(sock, chatId, query, message) {
         if (!query.includes("youtube.com") && !query.includes("youtu.be")) {
             const search = await yts(query);
             if (!search.videos || search.videos.length === 0) {
-                return await sock.sendMessage(chatId, { text: `❌ No results found for: ${query}` });
+                return await sock.sendMessage(chatId, { text: `❌ No se encontraron resultados para: ${query}` });
             }
             videoUrl = search.videos[0].url;
         }
@@ -31,7 +31,7 @@ async function ytplayCommand(sock, chatId, query, message) {
 
         if (!data || !data.download_url) {
             await sock.sendMessage(chatId, { react: { text: "❌", key: message.key } });
-            return await sock.sendMessage(chatId, { text: "❌ Failed to fetch audio. Try another link." });
+            return await sock.sendMessage(chatId, { text: "❌ No se pudo obtener el audio. Prueba con otro link." });
         }
 
         // Step 3: React while sending audio
@@ -60,7 +60,7 @@ async function ytplayCommand(sock, chatId, query, message) {
     } catch (error) {
         console.error("YTPlay Error:", error.message);
         await sock.sendMessage(chatId, { react: { text: "❌", key: message.key } });
-        await sock.sendMessage(chatId, { text: "❌ An error occurred while processing your request." });
+        await sock.sendMessage(chatId, { text: "❌ Se produjo un error al procesar su solicitud." });
     }
 }
 
