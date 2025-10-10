@@ -16,7 +16,7 @@ async function memeCommand(sock, chatId, message) {
 
             await sock.sendMessage(chatId, { 
                 image: imageBuffer,
-                caption: "> Here's your cheems meme! 🐕",
+                caption: "> ¡Aquí está tu meme de Cheems!🐕",
                 buttons: buttons,
                 headerType: 1
             },{ quoted: message});
@@ -26,7 +26,7 @@ async function memeCommand(sock, chatId, message) {
     } catch (error) {
         console.error('Error in meme command:', error);
         await sock.sendMessage(chatId, { 
-            text: '❌ Failed to fetch meme. Please try again later.'
+            text: '❌ No se pudo obtener el meme. Inténtalo de nuevo más tarde.'
         });
     }
 }
