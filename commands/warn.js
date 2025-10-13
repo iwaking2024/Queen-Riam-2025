@@ -38,21 +38,21 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
             
             if (!isBotAdmin) {
                 await sock.sendMessage(chatId, { 
-                    text: '❌ Error: Please make the bot an admin first to use this command.'
+                    text: '❌ Error: Primero convierte al bot en administrador para poder usar este comando.'
                 });
                 return;
             }
 
             if (!isSenderAdmin) {
                 await sock.sendMessage(chatId, { 
-                    text: '❌ Error: Only group admins can use the warn command.'
+                    text: '❌ Error: Solo los administradores del grupo pueden utilizar el comando warn.'
                 });
                 return;
             }
         } catch (adminError) {
             console.error('Error checking admin status:', adminError);
             await sock.sendMessage(chatId, { 
-                text: '❌ Error: Please make sure the bot is an admin of this group.'
+                text: '❌ Error: Asegúrate de que el bot sea administrador de este grupo.'
             });
             return;
         }
@@ -70,7 +70,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
         
         if (!userToWarn) {
             await sock.sendMessage(chatId, { 
-                text: '❌ Error: Please mention the user or reply to their message to warn!'
+                text: '❌ Error: ¡Por favor, menciona al usuario o responde a su mensaje para avisarle!'
             });
             return;
         }
@@ -115,7 +115,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
                 fs.writeFileSync(warningsPath, JSON.stringify(warnings, null, 2));
                 
                 const kickMessage = `*『 AUTO-KICK 』*\n\n` +
-                    `@${userToWarn.split('@')[0]} has been removed from the group after receiving 3 warnings! ⚠️`;
+                    `@${userToWarn.split('@')[0]} ¡Ha sido expulsado del grupo tras recibir 3 advertencias! ⚠️`;
 
                 await sock.sendMessage(chatId, { 
                     text: kickMessage,
@@ -134,7 +134,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             try {
                 await sock.sendMessage(chatId, { 
-                    text: '❌ Rate limit reached. Please try again in a few seconds.'
+                    text: '❌ Límite de tarifa alcanzado. Inténtelo de nuevo en unos segundos.'
                 });
             } catch (retryError) {
                 console.error('Error sending retry message:', retryError);
@@ -142,7 +142,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
         } else {
             try {
                 await sock.sendMessage(chatId, { 
-                    text: '❌ Failed to warn user. Make sure the bot is admin and has sufficient permissions.'
+                    text: '❌ No se pudo advertir al usuario. Asegúrese de que el bot sea administrador y tenga permisos suficientes.'
                 });
             } catch (sendError) {
                 console.error('Error sending error message:', sendError);
