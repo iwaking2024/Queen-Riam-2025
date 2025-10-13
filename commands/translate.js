@@ -44,7 +44,7 @@ module.exports = async function translateCommand(sock, chatId, message, match) {
                     .join("\n");
 
                 return sock.sendMessage(chatId, {
-                    text: `*TRANSLATOR*\n\nUsage:\n1. Reply to a message with: .translate <lang>\n2. Or type: .translate <text> <lang>\n\nExample:\n.translate hello fr\n.trt hello es\n\n📋 Available Codes:\n${available}`,
+                    text: `*TRANSLATOR*\n\nUsage:\n1. Responder a un mensaje con: .translate <lang>\n2. O escriba: .translate <text> <lang>\n\nEjemplo:\n.translate Hola fr\n.trt Hola es\n\n📋 Códigos disponibles:\n${available}`,
                     quoted: message
                 });
             }
@@ -55,7 +55,7 @@ module.exports = async function translateCommand(sock, chatId, message, match) {
 
         if (!textToTranslate) {
             return sock.sendMessage(chatId, {
-                text: '❌ No text found to translate. Please provide text or reply to a message.',
+                text: '❌ No se ha encontrado ningún texto para traducir. Por favor, introduzca texto o responda a un mensaje.',
                 quoted: message
             });
         }
@@ -100,13 +100,13 @@ module.exports = async function translateCommand(sock, chatId, message, match) {
 
         // Send translation result
         await sock.sendMessage(chatId, {
-            text: `🌐 *Translated (${lang})*\n\n${translatedText}`,
+            text: `🌐 *Traducido (${lang})*\n\n${translatedText}`,
         }, { quoted: message });
 
     } catch (error) {
         console.error('❌ Error in translate command:', error);
         await sock.sendMessage(chatId, {
-            text: '❌ Failed to translate text. Try again later.\n\nUsage:\n1. Reply to a message with: .translate <lang>\n2. Or type: .translate <text> <lang>',
+            text: '❌ No se ha podido traducir el texto. Inténtalo de nuevo más tarde.\n\nUsage:\n1. Responder a un mensaje con: .translate <lang>\n2. O escriba: .translate <text> <lang>',
             quoted: message
         });
     }
