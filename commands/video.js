@@ -3,7 +3,7 @@ const axios = require('axios'); const yts = require('yt-search'); const fs = req
 async function videoCommand(sock, chatId, message) { try { const text = message.message?.conversation || message.message?.extendedTextMessage?.text; const searchQuery = text.split(' ').slice(1).join(' ').trim();
 
 if (!searchQuery) {
-        await sock.sendMessage(chatId, { text: 'What video do you want to download?' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '¿Qué vídeo quieres descargar?' }, { quoted: message });
         return;
     }
 
@@ -42,7 +42,7 @@ const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIC
 const response = await axios.get(apiUrl, { headers: { 'Accept': 'application/json' } });
 
 if (response.status !== 200 || !response.data.status) {
-    await sock.sendMessage(chatId, { text: 'Failed to fetch video from the API.' }, { quoted: message });
+    await sock.sendMessage(chatId, { text: 'No se ha podido obtener el vídeo de la API.' }, { quoted: message });
     return;
 }
 
@@ -56,7 +56,7 @@ const videoDownloadUrl = data.videos["360"]; // use 360 quality link
     // Send preview before downloading
     await sock.sendMessage(chatId, {
         image: { url: thumbnail },
-        caption: `🎬 *${title}*\n📌 Quality: ${quality}\n\n> _Downloading your video..._`
+        caption: `🎬 *${title}*\n📌 Quality: ${quality}\n\n> _Descargando tu vídeo..._`
     }, { quoted: message });
 
     // Try sending the video directly from the remote URL
@@ -65,7 +65,7 @@ const videoDownloadUrl = data.videos["360"]; // use 360 quality link
             video: { url: videoDownloadUrl },
             mimetype: 'video/mp4',
             fileName: filename,
-            caption: `*${title}*\n📌 Quality: ${quality}\n\n> *_Downloaded by Queen Riam_*`
+            caption: `*${title}*\n📌 Quality: ${quality}\n\n> *_Descargado por shimba_*`
         }, { quoted: message });
 
         // React with ✅ when finished
@@ -87,7 +87,7 @@ const videoDownloadUrl = data.videos["360"]; // use 360 quality link
         const stats = fs.statSync(tempFile);
         const maxSize = 62 * 1024 * 1024; // 62MB
         if (stats.size > maxSize) {
-            await sock.sendMessage(chatId, { text: 'Video is too large to send on WhatsApp.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'El vídeo es demasiado grande para enviarlo por WhatsApp.' }, { quoted: message });
             return;
         }
 
@@ -95,7 +95,7 @@ const videoDownloadUrl = data.videos["360"]; // use 360 quality link
             video: { url: tempFile },
             mimetype: 'video/mp4',
             fileName: filename,
-            caption: `*${title}*\n📌 Quality: ${quality}\n\n> *_Downloaded by Queen Riam_*`
+            caption: `*${title}*\n📌 Quality: ${quality}\n\n> *_Descargado por shimba_*`
         }, { quoted: message });
 
         // React with ✅ when finished
