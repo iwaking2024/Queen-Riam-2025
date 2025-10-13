@@ -9,7 +9,7 @@ async function tomp3Command(sock, chatId, message) {
         await sock.sendMessage(chatId, {
             react: { text: "❌", key: message.key }
         });
-        await sock.sendMessage(chatId, { text: "❌ Please *reply to a video* with .tomp3" }, { quoted: message });
+        await sock.sendMessage(chatId, { text: "❌ Por favor, *responde al vídeo* con .tomp3" }, { quoted: message });
         return;
     }
 
@@ -41,7 +41,7 @@ async function tomp3Command(sock, chatId, message) {
     } catch (err) {
         console.error("tomp3 error:", err);
         await sock.sendMessage(chatId, { react: { text: "❌", key: message.key } });
-        await sock.sendMessage(chatId, { text: "❌ Failed to convert video to MP3." }, { quoted: message });
+        await sock.sendMessage(chatId, { text: "❌ No se pudo convertir el vídeo a MP3." }, { quoted: message });
     }
 }
 
