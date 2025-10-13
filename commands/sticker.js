@@ -31,7 +31,7 @@ async function stickerCommand(sock, chatId, message) {
 
     if (!mediaMessage) {
         await sock.sendMessage(chatId, { 
-            text: 'Please reply to an image/video with .sticker, or send an image/video with .sticker as the caption.',
+            text: 'Responde a una imagen o un vídeo con .sticker, o envía una imagen o un vídeo con .sticker como pie de foto.',
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
@@ -141,7 +141,7 @@ async function stickerCommand(sock, chatId, message) {
     } catch (error) {
         console.error('Error in sticker command:', error);
         await sock.sendMessage(chatId, { 
-            text: 'Failed to create sticker! Try again later.',
+            text: 'No se pudo crear el sticker, Vuelve a intentarlo más tarde.',
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
