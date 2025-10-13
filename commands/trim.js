@@ -15,7 +15,7 @@ async function trimCommand(sock, chatId, message, args) {
     const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
 
     if (!quoted?.videoMessage && !quoted?.audioMessage) {
-        await sock.sendMessage(chatId, { text: "❌ Please reply to a *video or audio* with `.trim`" }, { quoted: message });
+        await sock.sendMessage(chatId, { text: "❌ Por favor, responde a un *vídeo o audio* con `.trim`" }, { quoted: message });
         return;
     }
 
@@ -36,7 +36,7 @@ async function trimCommand(sock, chatId, message, args) {
             return new Promise((resolve, reject) => {
                 ffmpeg.ffprobe(inputFile, async (err, metadata) => {
                     if (err) {
-                        await sock.sendMessage(chatId, { text: "⚠️ Failed to get media duration." }, { quoted: message });
+                        await sock.sendMessage(chatId, { text: "⚠️ No se pudo obtener la duración del medio." }, { quoted: message });
                         return reject(err);
                     }
                     const duration = metadata.format.duration;
@@ -52,7 +52,7 @@ async function trimCommand(sock, chatId, message, args) {
         const start = parseInt(args[0]);
         const end = parseInt(args[1]);
         if (isNaN(start) || isNaN(end) || start >= end) {
-            await sock.sendMessage(chatId, { text: "❌ Invalid format. Use `.trim start end` (in seconds)" }, { quoted: message });
+            await sock.sendMessage(chatId, { text: "❌ Formato no válido. Utilice`.trim start end` (in seconds)" }, { quoted: message });
             return;
         }
 
