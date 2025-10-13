@@ -15,7 +15,7 @@ async function warningsCommand(sock, chatId, mentionedJidList) {
     const warnings = loadWarnings();
 
     if (mentionedJidList.length === 0) {
-        await sock.sendMessage(chatId, { text: 'Please mention a user to check warnings.' });
+        await sock.sendMessage(chatId, { text: 'Por favor mencione a una usuario para verificar las advertencias.});
         return;
     }
 
