@@ -45,7 +45,7 @@ async function tiktokCommand(sock, chatId, message) {
 
         if (!url) {
             return await sock.sendMessage(chatId, { 
-                text: "Please provide or reply to a TikTok link for the video."
+                text: "Por favor, proporcione un link de TikTok para el vídeo."
             });
         }
 
@@ -60,7 +60,7 @@ async function tiktokCommand(sock, chatId, message) {
         const isValidUrl = tiktokPatterns.some(pattern => pattern.test(url));
         if (!isValidUrl) {
             return await sock.sendMessage(chatId, { 
-                text: "That is not a valid TikTok link. Please provide a valid TikTok video link."
+                text: "Ese no es un link válido de TikTok. Por favor, proporcione un link válido a un vídeo de TikTok."
             });
         }
 
@@ -76,7 +76,7 @@ async function tiktokCommand(sock, chatId, message) {
             
             if (apiResponse.data && apiResponse.data.success && apiResponse.data.download) {
                 const videoUrl = apiResponse.data.download.video_hd || apiResponse.data.download.video_sd;
-                const caption = `〽️ Downloaded by *Queen Riam*\n\n*Title:* ${apiResponse.data.tiktok_info.title || 'N/A'}\n*Author:* ${apiResponse.data.tiktok_info.author || 'N/A'}\n\n🔗 ${finalUrl}`;
+                const caption = `〽️ Descargado por *Shimba*\n\n*Title:* ${apiResponse.data.tiktok_info.title || 'N/A'}\n*Author:* ${apiResponse.data.tiktok_info.author || 'N/A'}\n\n🔗 ${finalUrl}`;
 
                 if (videoUrl) {
                     await sock.sendMessage(chatId, {
@@ -91,19 +91,19 @@ async function tiktokCommand(sock, chatId, message) {
             }
 
             await sock.sendMessage(chatId, { 
-                text: "Failed to download the TikTok video. Please try again with a different link."
+                text: "No se ha podido descargar el vídeo de TikTok. Inténtalo de nuevo con otro enlace."
             });
 
         } catch (error) {
             console.error('Error in TikTok download:', error);
             await sock.sendMessage(chatId, { 
-                text: "Failed to download the TikTok video. An error occurred."
+                text: "No se ha podido descargar el vídeo de TikTok. Se ha producido un error."
             });
         }
     } catch (error) {
         console.error('Error in TikTok command:', error);
         await sock.sendMessage(chatId, { 
-            text: "An error occurred while processing the request. Please try again later."
+            text: "Se ha producido un error al procesar la solicitud. Inténtalo de nuevo más tarde."
         });
     }
 }
